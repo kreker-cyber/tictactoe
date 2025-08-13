@@ -1,11 +1,12 @@
 plugins {
+    id("org.springframework.boot") version "3.2.1"
+    id("io.spring.dependency-management") version "1.1.3"
     java
-    id("org.springframework.boot") version "3.2.3"
-    id("io.spring.dependency-management") version "1.1.4"
 }
 
 group = "org.example"
-version = "1.0-SNAPSHOT"
+version = "0.0.1-SNAPSHOT"
+java.sourceCompatibility = JavaVersion.VERSION_21
 
 repositories {
     mavenCentral()
@@ -16,6 +17,15 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-tasks.test {
-    useJUnitPlatform()
+tasks.withType<Jar> {
+    enabled = true
+}
+
+tasks.bootJar {
+    enabled = true
+    mainClass.set("org.example.TictactoeApplication")
+}
+
+tasks.build {
+    dependsOn(tasks.bootJar)
 }
